@@ -58,6 +58,18 @@ def gallery(request):
     context = {'categories': categories, 'photos': photos}
     return render(request, 'photos/gallery.html', context)
 
+def all_photo(request):
+    category = request.GET.get('category')
+    if category == None:
+        photos = Photo.objects.all()
+    else:
+        photos = Photo.objects.filter(category__name=category)
+
+    categories = Category.objects.all()
+    context = {'categories': categories, 'photos': photos}
+    return render(request,'photos/all_photo.html')
+    
+    
 
 @login_required(login_url='login')
 def viewPhoto(request, pk):
