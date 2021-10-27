@@ -64,10 +64,11 @@ def all_photo(request):
         photos = Photo.objects.all()
     else:
         photos = Photo.objects.filter(category__name=category)
-
+    print(photos)
     categories = Category.objects.all()
+    print(categories)
     context = {'categories': categories, 'photos': photos}
-    return render(request,'photos/all_photo.html')
+    return render(request,'photos/all_photo.html',context)
     
     
 
