@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Photo
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -65,7 +65,6 @@ def all_photo(request):
     else:
         photos = Photo.objects.filter(category__name=category)
     categories = Category.objects.all()
-    print(type(categories))
     context = {'categories': categories, 'photos': photos}
     return render(request,'photos/all_photo.html',context)
     
@@ -107,3 +106,11 @@ def addPhoto(request):
 
     context = {'categories': categories}
     return render(request, 'photos/add.html', context)
+
+def photo_delete(request, pk):
+    photo = get_object_or_404(Photo, id=pk)
+    #photo = Photo.objects.get(id=pk)
+
+    photo.delete()
+
+    return redirect('gallery')
